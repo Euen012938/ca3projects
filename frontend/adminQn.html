@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All science Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="adminStudent.css">
+</head>
+<body>
+    <div id="search">
+        <button id="back" class="btn btn-light" onclick="window.location.href ='admin.html'">Back</button>
+        <input type="text" placeholder="Enter Topic/Status.." id="search-bar" style="height:2.5rem">
+    </div>
+    <h1>All Questions</h1>
+
+    <h1>Science Qns</h1>
+    <button id="add" class="btn btn-light" onclick="insertrow()">Add Science Qns +</button>
+    <div class="t-container p-5">
+        <table class="table table-bordered" id="table">
+            <thead>
+                <tr id="no">
+                    <th>ID</th>
+                    <th>Topic</th>
+                    <th>Question</th>
+                    <th>Status</th>
+                    <th>Answer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="mobile-form">
+        <h2>Update Question</h2>
+        <div>
+            <ul>
+                <div id="qn">
+                    <li>
+                        <label for="lang">Topic:</label>
+                        <select id="topic">
+                            <option id="heat" value="heat" selected>heat</option>
+                            <option id="non/livingthings" value="non/livingthings">non/livingthings</option>
+                            <option id="matter" value="matter">matter</option>
+                            <option id="digestivesystem" value="digestivesystem">digestivesystem</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" name="signFirstname" class="form-style"
+                        placeholder="question" id="questions" autocomplete="off">
+                    </li>
+                    <li>
+                        <label for="lang">Status:</label>
+                        <select id="status">
+                            <option id="complete" value="completed">completed</option>
+                            <option id="non-complete" value="non-completed" selected>incomplete</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" name="email" class="form-style"
+                        placeholder="answer" id="answer" autocomplete="off">
+                    </li>
+                </div>
+                <div id="option">
+                    <li>
+                        <input type="text" name="signFirstname" class="form-style"
+                        placeholder="option1" id="option1s" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="signFirstname" class="form-style"
+                        placeholder="option2" id="option2s" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="signFirstname" class="form-style"
+                        placeholder="option3" id="option3s" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="signFirstname" class="form-style"
+                        placeholder="option4" id="option4s" autocomplete="off">
+                    </li>
+                </div>
+                <button class="btn mt-4" id="submit">Submit</button>
+              </ul>
+        </div>
+    </div>
+
+        <div id="form">
+            <h2>Add Question</h2>
+            <div>
+                <div id="form1" class="row">
+                    <ul>
+                        <div id="form2">
+                            <div id="qn">
+                                <li>
+                                    <label for="lang">Topic:</label>
+                                    <select id="A-topic">
+                                        <option id="heat" value="heat" selected>heat</option>
+                                        <option id="non/livingthings" value="non/livingthings">non/livingthings</option>
+                                        <option id="matter" value="matter">matter</option>
+                                        <option id="digestivesystem" value="digestivesystem">digestivesystem</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <input type="text" name="signFirstname" class="form-style"
+                                    placeholder="questions" id="A-questions" autocomplete="off">
+                                </li>
+                                <li>
+                                    <label for="lang">Status:</label>
+                                    <select id="A-status">
+                                        <option id="complete" value="completed">completed</option>
+                                        <option id="non-complete" value="non-completed" selected>incomplete</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <input type="text" name="email" class="form-style"
+                                    placeholder="answer" id="A-answer" autocomplete="off">
+                                </li>
+                            </div>
+                            <div id="option">
+                                    <li>
+                                        <input type="text" name="signFirstname" class="form-style"
+                                        placeholder="option1" id="option1" autocomplete="off">
+                                    </li>
+                                    <li>
+                                        <input type="text" name="signFirstname" class="form-style"
+                                        placeholder="option2" id="option2" autocomplete="off">
+                                    </li>
+                                    <li>
+                                        <input type="text" name="signFirstname" class="form-style"
+                                        placeholder="option3" id="option3" autocomplete="off">
+                                    </li>
+                                    <li>
+                                        <input type="text" name="signFirstname" class="form-style"
+                                        placeholder="option4" id="option4" autocomplete="off">
+                                    </li>
+                            </div>
+                        </div>
+                        <button class="btn mt-4" id="add-submit">Submit</button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+        const searchinput = document.getElementById('search-bar');
+        let users = [];
+
+
+////////////////////                         SCIENCE                         ////////////////////
+
+///////////////////////////////////SEARCHBAR///////////////////////////////////
+
+        searchinput.addEventListener("keyup", (e) => {
+            const value = e.target.value
+            console.log(value)
+            const filteredQn = users.filter( question => {
+                return (
+                    question.topic.includes(value) ||
+                    question.status.includes(value)
+                )
+            })
+            console.log(filteredQn)
+            let text;
+            for(i=0; i < filteredQn.length; i++){
+                let studentss = 
+                `
+                <tr>
+                    <td>${filteredQn[i].scienceid}</td>
+                    <td>${filteredQn[i].topic}</td>
+                    <td>${filteredQn[i].questions}</td>
+                    <td>${filteredQn[i].status}</td>
+                    <td>${filteredQn[i].answer}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="updaterow(${filteredQn[i].scienceid})">Update</button> |
+                        <button class="btn btn-danger" onclick="deleterow(${filteredQn[i].scienceid})">Delete</button>
+                    </td>
+                </tr>
+                `;
+                text += studentss 
+            $('#table-body').html(text);
+            }
+
+
+        })
+///////////////////////////////////GETTING QUESTIONS///////////////////////////////////
+
+        axios.get(`${baseUrl}/api/science/allquestion`)
+        .then((response)=>{
+            console.log(response.data[0]);
+            let question = response.data[0];
+            let text;
+            for(i=0; i < question.length; i++){
+                let studentss = 
+                `
+                <tr>
+                    <td>${question[i].scienceid}</td>
+                    <td>${question[i].topic}</td>
+                    <td>${question[i].questions}</td>
+                    <td>${question[i].status}</td>
+                    <td>${question[i].answer}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="updaterow(${question[i].scienceid})">Update</button> |
+                        <button class="btn btn-danger" onclick="deleterow(${question[i].scienceid})">Delete</button>
+                    </td>
+                </tr>
+                `;
+                text += studentss 
+            $('#table-body').html(text);
+            users = question
+            }
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+///////////////////////////////////DELETING ROW///////////////////////////////////
+        const deleterow = (id) => {
+            axios.delete(`${baseUrl}/api/admin/question/${id}`)
+            .then((response)=>{
+                console.log(response.data);
+                window.location.href='adminQn.html';
+                alert('u deleted a question!');
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        };
+///////////////////////////////////INSERT ROW///////////////////////////////////
+        const insertrow = () => {
+            $("#t-container").hide();
+            $("#table").hide();
+            $("#add").hide();
+            $("h1").hide();
+            $('#search-bar').hide();
+            $('#search').hide();
+            $("#back").hide();
+            $("#form").show();
+
+            $('#add-submit').click(function(event){
+                event.preventDefault();
+
+
+                const selct = document.getElementById('A-topic');
+                const text2 = selct.options[selct.selectedIndex].text;
+
+                const questions = $('#A-questions').val();
+
+                var select = document.getElementById('A-status');
+                const text = select.options[select.selectedIndex].text;
+
+                const answer = $('#A-answer').val();
+
+                const body1 = {
+                    topic: text2,
+                    questions : questions,
+                    status : text,
+                    answer : answer
+                };
+
+
+                const option1 = $('#option1').val();
+                const option2 = $('#option2').val();
+                const option3 = $('#option3').val();
+                const option4 = $('#option4').val();
+
+                const body2 = {
+                    option1 :option1,
+                    option2 :option2,
+                    option3 :option3,
+                    option4 :option4
+                };
+
+                    axios.post(`${baseUrl}/api/admin/question`, body1)
+                    .then((response)=>{
+                        console.log(response.data);
+                        axios.post(`${baseUrl}/api/admin/question/option`, body2)
+                        .then((response)=>{
+                            console.log(response.data);
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                        window.location.href='adminQn.html';
+                        alert('YAY YOU INSERTED A QUESTION');
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+            })
+        
+
+            
+        }
+
+///////////////////////////////////UPDATE ROW///////////////////////////////////
+        const updaterow = (id) => {
+
+            $("#t-container").hide();
+            $("#table").hide();
+            $("#add").hide();
+            $('#search-bar').hide();
+            $('#search').hide();
+            $("h1").hide();
+            $("#back").hide();
+            $("#mobile-form").show();
+
+            $('#submit').click(function(event){
+                event.preventDefault();
+
+                const level = $('#level').val();
+                const questions = $('#questions').val();
+
+                var select = document.getElementById('status');
+                const text = select.options[select.selectedIndex].text;
+
+                const selct = document.getElementById('topic');
+                const text2 = selct.options[selct.selectedIndex].text;
+                
+
+                const answer = $('#answer').val();
+
+                let body = {
+                    topic: text2,
+                    questions : questions,
+                    status : text,
+                    answer : answer
+                }
+
+                const option1 = $('#option1s').val();
+                const option2 = $('#option2s').val();
+                const option3 = $('#option3s').val();
+                const option4 = $('#option4s').val();
+
+                const body2 = {
+                    option1 :option1,
+                    option2 :option2,
+                    option3 :option3,
+                    option4 :option4
+                };
+
+                axios.put(`${baseUrl}/api/admin/question/${id}`, body)
+                .then((response)=>{
+                    console.log(response.data);
+                    console.log(text);
+                    console.log(text2);
+                    axios.put(`${baseUrl}/api/admin/question/option/${id}`, body2)
+                    .then((response)=>{
+                        console.log(response.data);
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+                    window.location.href='adminQn.html';
+                    alert('YAY YOU UPDATED A QUESTION!!!');
+                })
+                .catch((error)=>{
+                    console.log(error);
+                })
+
+
+            });
+        };
+
+        
+    </script>
+
+</body>
+</html>

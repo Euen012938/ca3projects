@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="english.css">
+</head>
+
+<body>
+    <nav>
+        <a href="./frontpage.html">Home</a>
+        <a href="./englishLsn.html">Lessons</a>
+        <a href="./english.html">English Qns</a>
+    </nav>
+    <div class="container">
+        <div class="home-screen ">
+            <h1 class="heading">English Quiz</h1>
+
+            <div class="settings">
+                <label for="categories">Select Category</label>
+                <select id="categories">
+                    <option value="" disabled selected>Select a Category</option>
+                    <!-- <option value="1">1.Grammar</option>
+                    <option value="2">2.Grammar</option>
+                    <option value="3">3.Grammar</option>
+                    <option value="4">4.Grammar</option>
+                    <option value="5">5.Grammar</option> -->
+                  </select>
+                  <label for="quizid">Select Quiz</label>
+                <select id="quizid">
+                    <option value="" disabled selected>Select Quiz</option>
+                    <!-- <option value="1">1.Grammar</option>
+                    <option value="2">2.Grammar</option>
+                    <option value="3">3.Grammar</option>
+                    <option value="4">4.Grammar</option>
+                    <option value="5">5.Grammar</option> -->
+                  </select>
+                <label for="time">Select time per question</label>
+                <select name="" id="time">
+                    <option value="10">10 seconds</option>
+                    <option value="15">15 seconds</option>
+                    <option value="20">20 seconds</option>
+                    <option value="30">30 seconds</option>
+                    <option value="60">60 seconds</option>
+                </select>
+            </div>
+            <button class="btn start" >Start Quiz</button>
+        </div>
+        <div class="quiz hide">
+            <div class="timer">
+                <div class="progress">
+                    <div class="progress-bar"></div>
+                    <span class="progress-text">50</span>
+                </div>
+            </div>
+            <div class="question-wrapper">
+                <div class="number">
+                </div>
+                <div id="question" class="question"></div>
+            </div>
+            <div class="answer-wrapper">
+            </div>
+            <button class="btn submit" disabled>Submit</button>
+            <button class="btn next">Next</button>
+        </div>
+        <div class="end-screen hide">
+            <h1 class="heading">English Quiz</h1>
+            <div class="score">
+                <span class="score-text">Your Score:</span>
+                <div>
+                    <span class="final-score">0</span>
+                    <span class="total-score">/10</span>
+                </div>
+            </div>
+            <button class=" btn restart">Restart Quiz</button>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            let  baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+        const token = localStorage.getItem("token");
+        const userid = parseInt(localStorage.getItem("loggedInUserID"));
+
+        if (token === null || isNaN(userid)) {
+            alert('Require Admin....')
+            window.location.href = `${baseUrl}/index.html`;
+        } else {
+
+            const progressBar = document.querySelector('.progress-bar'),
+                progressText = document.querySelector('.progress-text');
+
+            const progress = (value)=>{
+                const percentage = (value/time) * 100;
+                progressBar.style.width = `${percentage}%`;
+                progressText.innerHTML = `${value}`;
+            }
+
+            let questions= [],
+            quizzes = [],
+            categories = [],
+            time = 30,
+            score =0,
+            currentQuestion,
+            timer;
+
+
+            const restartBtn =document.querySelector('.btn.restart');
+            const startBtn = document.querySelector('.start'),
+                categorySelect = document.querySelector('#categories'),
+                quizSelect = document.querySelector('#quizid'),
+                timePerQuestion = document.querySelector('#time'),
+                quiz = document.querySelector('.quiz'),
+                startscreen = document.querySelector('.home-screen');  
+             const answerDiv = document.querySelectorAll('.answer');
+             const submitBtn = document.querySelector('.btn.submit');
+            const nextBtn = document.querySelector('.btn.next');
+            const questionNumber = document.querySelector('.number');  
+
+            const fetchCategories = () => {
+        axios.get(`${baseUrl}/api/english/categories`)
+            .then((response) => {
+                if (response.data.length > 0) {
+                    categories = response.data[0]
+                    console.log(categories);
+
+                    categories.forEach((category) => {
+                        categorySelect.innerHTML +=
+                            `
+                            <option value="${category.category_id}">${category.category_name}</option>
+                            `;
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching categories:', error);
+            });
+    };
+
+    const fetchQuestion = () => {
+  const selectedCategory = categorySelect.value;
+
+  if (!selectedCategory) {
+    return;
+  }
+
+  // Reset the quizSelect dropdown before fetching new options
+  quizSelect.innerHTML = '<option value="" disabled selected>Select Quiz</option>';
+
+  axios.get(`${baseUrl}/api/english/questions/${selectedCategory}`)
+    .then((response) => {
+      if (response.data.length > 0) {
+        quizzes = response.data[0];
+        console.log(quizzes);
+
+        quizzes.forEach((quiz) => {
+          quizSelect.innerHTML +=
+            `
+            <option value="${quiz.quiz_id}">${quiz.quizname}</option>
+            `;
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching questions:', error);
+    });
+};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchCategories(); 
+        categorySelect.addEventListener('change', fetchQuestion);
+    });
+
+   
+
+const startQuiz = () =>{
+    const selectedCategory = categorySelect.value;
+    const selectedQuiz = quizSelect.value
+      if (!selectedCategory || !selectedQuiz ) {
+    alert('Please select a category and quiz before starting the quiz');
+    return;
+  } else {
+    axios.get(`${baseUrl}/api/english/category/${selectedCategory}/${selectedQuiz}`)
+  .then((response) => {
+    if (response.data.length > 0) { 
+      questions = response.data[0]
+      console.log(questions)
+
+      startscreen.classList.add('hide');
+      quiz.classList.remove('hide');
+      currentQuestion = 1;
+      showQuestion(questions[0])
+    }})
+}}
+
+
+
+startBtn.addEventListener('click',startQuiz);
+
+const showQuestion = (question) => {
+  const questionText = document.querySelector('.question'),
+    answersWrapper = document.querySelector('.answer-wrapper'),
+    questionNumber = document.querySelector('.number');
+
+  // Clear the previous answers
+  answersWrapper.innerHTML = '';
+
+  questionText.innerHTML = question.question;
+
+  const answers = [
+    question.incorrect1,
+    question.incorrect2,
+    question.incorrect3,
+    question.correct_answer.toString(),
+  ];
+  answers.sort(() => Math.random() - 0.5);
+  answers.forEach((answer) => {
+    answersWrapper.innerHTML += `
+      <div class="answer">
+        <span class="text">${answer}</span>
+        <span class="checkbox">
+          <span class="icon">✓</span>
+        </span>
+      </div>
+    `;
+  });
+
+questionNumber.innerHTML = `
+Question <span class = 'current'>
+    ${questions.indexOf(question)+1}
+    </span><span class = 'total'>/${questions.length}</span>
+`
+
+const answersDiv = document.querySelectorAll('.answer');
+answersDiv.forEach((answer)=>{
+    answer.addEventListener('click',()=>{
+        if(!answer.classList.contains('checked')){
+            answersDiv.forEach((answer)=>{
+                answer.classList.remove('selected')
+            });
+            answer.classList.add('selected')
+            submitBtn.disabled =false
+        }
+    })
+})
+
+time =timePerQuestion.value
+
+startTimer(time);
+
+
+
+};   
+ const startTimer = (time) => {
+      timer = setInterval(() => {
+        if (time >= 0) {
+          progress(time);
+          time--;
+        }else{
+            checkAnswer();
+        }
+      }, 1000);
+    };
+
+
+    submitBtn.addEventListener('click',()=>{checkAnswer()})
+
+    const checkAnswer = () => {
+  clearInterval(timer);
+  const selectedAnswer = document.querySelector('.answer.selected');
+
+  if (selectedAnswer) {
+    const answerText = selectedAnswer.querySelector('.text').innerHTML; // Get the innerHTML of the selected answer
+    if (answerText === questions[currentQuestion - 1].correct_answer) {
+      score++;
+      selectedAnswer.classList.add('correct');
+    } else {
+      selectedAnswer.classList.add('wrong');
+      const correctAnswer = document.querySelectorAll('.answer').forEach((answer) => {
+        if (answer.querySelector('.text').innerHTML === questions[currentQuestion - 1].correct_answer) {
+          answer.classList.add('correct');
+        }
+      });
+    }
+  } else {
+    const correctAnswer = document.querySelectorAll('.answer').forEach((answer) => {
+      if (answer.querySelector('.text').innerHTML === questions[currentQuestion - 1].correct_answer) {
+        answer.classList.add('correct');
+      }
+    });
+  }
+
+  const answerDiv = document.querySelectorAll('.answer');
+  answerDiv.forEach((answer) => {
+    answer.classList.add('checked');
+  });
+
+  submitBtn.style.display = 'none';
+  nextBtn.style.display = 'block';
+};
+
+    nextBtn.addEventListener('click',()=>{
+        nextQuestion();
+        nextBtn.style.dispay = 'none'
+        submitBtn.style.display = 'block'
+    })
+
+    const nextQuestion = () =>{
+        if(currentQuestion < questions.length){
+            currentQuestion++;
+            showQuestion(questions[currentQuestion-1])
+        }else{
+            showScore()
+        }
+    }
+
+const endScreen =document.querySelector('.end-screen'),
+finalScore = document.querySelector('.final-score'),
+totalScore = document.querySelector('.total-score');
+
+const showScore = () => {
+  const userid = parseInt(localStorage.getItem("loggedInUserID"));
+  endScreen.classList.remove('hide');
+  quiz.classList.add('hide');
+  finalScore.innerHTML = `${score}`;
+  totalScore.innerHTML = `/${questions.length}`;
+
+  const requestBody = {
+    user_id: userid,
+    coin_balance: score
+  };
+
+  // New function to check and insert user if not exists
+  const checkAndInsertUser = (userid, score) => {
+    axios.get(`${baseUrl}/api/english/checkuser/${userid}`)
+      .then((response) => {
+        if (!response.data.exists) {
+          axios.post(`${baseUrl}/api/english/score/${userid}`, { coin_balance: score })
+            .then((insertResponse) => {
+              console.log("User inserted successfully", insertResponse.data);
+              console.log("Coin balance updated successfully");
+            })
+            .catch((insertError) => {
+              console.log(insertError);
+              alert("Something unexpected went wrong while inserting user.");
+            });
+        } else {
+          console.log("User already exists, updating coin balance...");
+          axios.put(`${baseUrl}/api/english/updatescore/${userid}`, requestBody)
+            .then((updateResponse) => {
+              console.log("Coin balance updated successfully", updateResponse.data[0]);
+            })
+            .catch((updateError) => {
+              console.log(updateError);
+              alert("Something unexpected went wrong while updating coin balance.");
+            });
+        }
+      })
+      .catch((checkError) => {
+        console.log(checkError);
+        alert("Something unexpected went wrong while checking user.");
+      });
+  };
+
+  checkAndInsertUser(userid, score);
+};
+
+
+
+restartBtn.addEventListener('click',()=>{
+    window.location.reload()
+})
+
+}
+
+</script>
+
+</body>
+
+</html>

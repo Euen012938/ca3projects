@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Tutorial</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="mathTutorial.css" />
+</head>
+
+<body>
+    <nav>
+        <div>
+            <a href="./frontpage.html">Home</a>
+            <a href="./mathTutorial.html">Tutorial</a>
+            <a href="./math.html">Math Games</a>
+            <a href="./mathComment.html">Math Comments</a>
+            <a href="./mathfeedback.html">Feedbacks</a>
+        </div>
+        <button class="logoutbtn" onclick="logoutFunction()">Log Out</button>
+    </nav>
+
+    <h1>The Importance learning Arithmetic Operations</h1>
+    <h3>We must first know the numbers 1 through 10. <br /><strong>Starting, 1 One, 2 Two, 3 Three, 4 Four, 5 Five, 6
+            Six, 7 Seven, 8 Eight, 9 Nine, 10 Ten</strong></h3>
+
+    <div class="container">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="./images/MathAddition.png" alt="Card Front Image">
+                    <h4>Addition</h4>
+                </div>
+                <div class="flip-card-back">
+                    <div class="card-content">
+                        <h2>Addition</h2>
+                        <p class="information">In this image, we see 5 mango and 1 mango. 5 + 1 means 5 adding 1 more and after 5 is 6 <br>
+                            Therefore, <strong> 5 + 1 is 6 Six</strong></p>
+                        <a href="https://www.youtube.com/watch?v=mjlsSYLLOSE" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="./images/MathSubstration.png" alt="Card Front Image">
+                    <h4>Substration</h4>
+                </div>
+                <div class="flip-card-back">
+                    <div class="card-content">
+                        <h2>Substration</h2>
+                        <p class="information">In this image, we see 5 peach and 2 peace. 5 - 2 means 5 minus 2 and backtrack from 5 is 4
+                            then 3
+                            <br>Therefore, <strong> 5 - 2 is 3 Three</strong></p>
+                        <a href="https://www.youtube.com/watch?v=ug0gs8kLE48" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="./images/MathMulitplication.png" alt="Card Front Image">
+                    <h4>Multiplication</h4>
+                </div>
+                <div class="flip-card-back">
+                    <div class="card-content">
+                        <h2>Multiplication</h2>
+                        <p class="information">In this image, we need to <strong>memorise</strong> all the time table allowing you to know
+                            what 3
+                            x 5</p>
+                        <a href="https://www.youtube.com/watch?v=eW2dRLyoyds" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 E-Learning. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+
+        const token = localStorage.getItem("token");
+        const userid = parseInt(localStorage.getItem("loggedInUserID"));
+
+        if (token === null || isNaN(userid)) {
+            alert('Require Admin....')
+            window.location.href = `${baseUrl}/index.html`;
+        } else {
+            function logoutFunction() {
+                event.preventDefault();
+
+                console.log(localStorage.getItem("loggedInUserID")); //
+                localStorage.setItem("token", null);
+                localStorage.setItem("loggedInUserID", '');
+                window.location.href = `${baseUrl}/index.html`;
+
+            }
+        }
+    </script>
+</body>
+
+</html>

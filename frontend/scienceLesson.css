@@ -1,0 +1,76 @@
+nav a {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: blueviolet;
+    text-decoration: none;
+    padding-left: 2%;
+    padding-top: 2%
+}
+
+body {
+    background-color: #2a2b38;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+}
+
+.row .img-fluid {
+    border-radius: 25px;
+    border: 3px solid black;
+    box-shadow: 3px 3px 5px black;
+    margin-left: 20%;
+}
+
+p{
+    font-size: 1.2rem;
+    padding-left: 40px;
+    color: #FEFAE0;
+}
+
+h2{
+    padding: 2%;
+    color: #FEFAE0;
+}
+
+li{
+    font-size: 1.2rem;
+    padding-left: 5%;
+    color: #FEFAE0;
+}
+
+#li{
+    padding-bottom:5%
+}
+
+h4 {
+    color: #FEFAE0;
+}
+
+nav a {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #2a2b38;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+nav {
+    background-color: #FEFAE0;
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
+}
+
+#container {
+    padding: 5%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5%;
+    box-shadow: 5px 5px;
+}
+
+#back {
+    background-color: #FEFAE0;
+    color: #2a2b38;
+    margin: 2%;
+}

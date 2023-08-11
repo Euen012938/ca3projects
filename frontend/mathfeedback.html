@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Comments</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="mathfeedback.css" />
+</head>
+
+<body>
+    <nav>
+        <div>
+            <a href="./frontpage.html">Home</a>
+            <a href="./mathTutorial.html">Tutorial</a>
+            <a href="./math.html">Math Games</a>
+            <a href="./mathComment.html">Math Comments</a>
+            <a href="./mathfeedback.html">Feedbacks</a>
+        </div>
+        <button class="logoutbtn" onclick="logoutFunction()">Log Out</button>
+    </nav>
+
+    <div class="feedback">
+    </div>
+
+    <footer>
+        <p>&copy; 2023 E-Learning. All rights reserved.</p>
+    </footer>
+    <!--Script-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+
+        let Data = []
+        const token = localStorage.getItem("token");
+        const userid = parseInt(localStorage.getItem("loggedInUserID"));
+        console.log(userid)
+
+        if (token === null || isNaN(userid)) {
+            alert('Require Admin....')
+            window.location.href = `${baseUrl}/index.html`;
+        } else {
+            function logoutFunction() {
+                event.preventDefault();
+
+                console.log(localStorage.getItem("loggedInUserID")); //
+                localStorage.setItem("token", null);
+                localStorage.setItem("loggedInUserID", '');
+                window.location.href = `${baseUrl}/index.html`;
+
+            }
+
+            axios.get(`${baseUrl}/api/math/AdminComments`, { params: { userid: userid } })
+                .then((res) => {
+                    let totalData;
+                    console.log(res.data[0]);
+                    let data = res.data[0];
+                    for (i = 0; i < data.length; i++) {
+                        let commentsz =
+                            `<h2>Dear Fellow Fighter, I and my team have somethings to tell you. 
+                <div class='seperate'>${data[i].comments}</div></h2>
+                `;
+                        // totalData += commentsz
+                        $('.feedback').html(commentsz);
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    </script>
+</body>
+
+</html>

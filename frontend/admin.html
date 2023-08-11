@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <nav>
+        <button class="btn" onclick="logoutFunction()">Log Out</button>
+    </nav>
+    <div id="b-container">
+        <div id="container" onclick="window.location.href='adminQn.html'">
+            <h2>All <br> Science Questions</h3>
+        </div>
+        <div id="container" onclick="window.location.href='adminEng.html'">
+            <h2>All <br> English Questions</h3>
+        </div>
+        <div id="container" onclick="window.location.href='adminStudent.html'">
+            <h2>All <br> Students</h3>
+        </div>
+        <div id="container" onclick="window.location.href='adminInfo.html'">
+            <h2>All <br> Admins</h3>
+        </div>
+        <div id="container" onclick="window.location.href='adminMathComments.html'">
+            <h2>Getting <br> Feedbacks </h3>
+        </div>
+        <div id="container" onclick="window.location.href='adminShop.html'">
+            <h2>All <br> Shop</h3>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+
+        function logoutFunction() {
+            event.preventDefault();
+
+            console.log(localStorage.getItem("loggedInUserID")); //
+            localStorage.setItem("token", null);
+            localStorage.setItem("loggedInUserID", '');
+            window.location.href = `${baseUrl}/index.html`;
+        }
+    </script>
+</body>
+
+</html>

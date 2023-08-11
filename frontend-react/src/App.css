@@ -1,0 +1,985 @@
+@import url('https://unicons.iconscout.com/release/v2.1.9/css/unicons.css');
+
+#Nav,
+#Footer {
+  display: flex;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  height: 60px;
+  align-items: center;
+}
+
+#Footer p {
+  color: white;
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  margin: auto;
+}
+
+#MathBar {
+  display: flex;
+  background-color: #FEFAE0;
+  height: 60px;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.Main h2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #2a2b38;
+}
+
+#Nav a,
+#MathBar a {
+  display: block;
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+#MathBar a:visited,
+#MathBar a:link {
+  color: #2a2b38;
+}
+
+#Nav a:visited,
+#Nav a:link {
+  color: white;
+}
+
+#Nav a:hover,
+#Nav a:active {
+  color: #f0f8ff;
+  background-color: rgba(67, 70, 89, 0.5);
+}
+
+.Main {
+  min-height: 200px;
+  padding: 20px;
+}
+
+.Main .logout-to-right {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Main .LogoutBtn {
+  border: none;
+  background-color: rgb(225, 225, 225);
+  box-shadow: 3px 3px grey;
+  border-radius: 10px;
+  height: fit-content;
+  padding: 7px;
+  margin-right: 20px;
+}
+
+.Main .LogoutBtn:hover,
+.Main .LogoutBtn:active,
+.Main .LogoutBtn:focus {
+  background-color: #7D869C;
+}
+
+.Main .boxBorder {
+  margin-bottom: 40px;
+  padding: 30px;
+  background-color: rgb(225, 225, 225);
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px rgba(192, 192, 192, 0.7);
+}
+
+.Main .boxBorder h3,
+.Main .boxBorder a,
+.Main .boxBorder p {
+  display: flex;
+  justify-content: center;
+}
+
+.Main .boxBorder img {
+  width: 500px;
+  /* Set the desired width */
+  height: auto;
+  /* Automatically adjust the height while maintaining the aspect ratio */
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.Main a:visited,
+.Main a:link {
+  margin-left: 10px;
+  text-decoration: none;
+  background-color: #586994;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.Main a:hover {
+  background-color: #7D869C;
+}
+
+.Login,
+.AdminLogin {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #c4c3ca;
+  background-color: #1f2029;
+  overflow-x: hidden;
+}
+
+.Login .link {
+  color: #c4c3ca;
+}
+
+.Login .link:hover {
+  color: #ffeba7;
+}
+
+.Login p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.Login h4,
+.AdminLogin h4 {
+  font-weight: 600;
+  color: #c4c3ca;
+}
+
+.Login h6 span {
+  padding: 0 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.Login .section,
+.AdminLogin .section {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.Login .full-height,
+.AdminLogin .full-height {
+  min-height: 100vh;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.Login .checkbox:checked+label,
+.Login .checkbox:not(:checked)+label {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 60px;
+  height: 16px;
+  border-radius: 8px;
+  padding: 0;
+  margin: 10px auto;
+  cursor: pointer;
+  background-color: #ffeba7;
+}
+
+.Login .checkbox:checked+label:before,
+.Login .checkbox:not(:checked)+label:before {
+  position: absolute;
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #ffeba7;
+  background-color: #102770;
+  font-family: 'unicons';
+  content: '\eb4f';
+  z-index: 20;
+  top: -10px;
+  left: -10px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 24px;
+  transition: all 0.5s ease;
+}
+
+.Login .checkbox:checked+label:before {
+  transform: translateX(44px) rotate(-270deg);
+}
+
+.Login .card-3d-wrap {
+  position: relative;
+  width: 440px;
+  max-width: 100%;
+  height: 550px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  margin-top: 60px;
+}
+
+.Login .card-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out;
+}
+
+.Login .card-front,
+.Login .card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  position: absolute;
+  border-radius: 6px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.Login .card-back {
+  transform: rotateY(180deg);
+}
+
+.Login .checkbox:checked~.card-3d-wrap .card-3d-wrapper {
+  transform: rotateY(180deg);
+}
+
+.Login .center-wrap,
+.AdminLogin .center-wrap {
+  position: absolute;
+  width: 100%;
+  padding: 0 35px;
+  top: 50%;
+  left: 0;
+  transform: translate3d(0, -50%, 35px) perspective(100px);
+  z-index: 20;
+  display: block;
+}
+
+.Login .form-group,
+.AdminLogin .form-group {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.Login .form-style,
+.AdminLogin .form-style {
+  padding: 13px 20px;
+  padding-left: 55px;
+  height: 48px;
+  width: 100%;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  outline: none;
+  color: #c4c3ca;
+  background-color: #1f2029;
+  border: none;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
+}
+
+.Login .form-style:focus,
+.Login .form-style:active,
+.AdminLogin .form-style:focus,
+.AdminLogin .form-style:active {
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
+}
+
+.Login .input-icon,
+.AdminLogin .input-icon {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  height: 48px;
+  font-size: 24px;
+  line-height: 48px;
+  text-align: left;
+  color: #ffeba7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:-ms-input-placeholder,
+.AdminLogin .form-group input:-ms-input-placeholder {
+  color: #c4c3ca;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input::-moz-placeholder,
+.AdminLogin .form-group input::-moz-placeholder {
+  color: #c4c3ca;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:-moz-placeholder,
+.AdminLogin .form-group input:-moz-placeholder {
+  color: #c4c3ca;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input::-webkit-input-placeholder,
+.AdminLogin .form-group input::-webkit-input-placeholder {
+  color: #c4c3ca;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:focus:-ms-input-placeholder,
+.AdminLogin .form-group input:focus:-ms-input-placeholder {
+  opacity: 0;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:focus::-moz-placeholder,
+.AdminLogin .form-group input:focus::-moz-placeholder {
+  opacity: 0;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:focus:-moz-placeholder,
+.AdminLogin .form-group input:focus:-moz-placeholder {
+  opacity: 0;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .form-group input:focus::-webkit-input-placeholder,
+.AdminLogin .form-group input:focus::-webkit-input-placeholder {
+  opacity: 0;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.Login .btn,
+.AdminLogin .btn {
+  border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  padding: 0 30px;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  background-color: #ffeba7;
+  color: #102770;
+  box-shadow: 0 8px 24px 0 rgba(255, 235, 167, .2);
+}
+
+.Login .btn:active,
+.Login .btn:focus,
+.AdminLogin .btn:active,
+.AdminLogin .btn:focus {
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
+}
+
+.Login .btn:hover,
+.AdminLogin .btn:hover {
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
+}
+
+.Login .section .Admin {
+  position: fixed;
+  width: 50%;
+  bottom: 10px;
+  color: darkslategray;
+  text-decoration: none;
+  padding-left: 5px;
+}
+
+.AdminLogin .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AdminLogin .card {
+  width: 440px;
+  max-width: 100%;
+  height: 400px;
+  perspective: 800px;
+  margin-top: 60px;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  position: relative;
+  border-radius: 6px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Math */
+
+.Math nav,
+.MathT nav,
+.MathC nav,
+.MathF nav {
+  background-color: #FEFAE0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.Math nav a,
+.MathT nav a,
+.MathC nav a,
+.MathF nav a {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #2a2b38;
+  text-decoration: none;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+
+.Math .footer,
+.MathT .footer,
+.MathC footer,
+.MathF .footer {
+  color: white;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -100%)
+}
+
+.Math h1 {
+  padding: 20px 0px 0px 20px;
+}
+
+.Math,
+.MathT,
+.MathC,
+.MathF {
+  min-height: 750px;
+  min-width: 1600px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #FEFAE0;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+}
+
+.Math .background {
+  min-height: 750px;
+  min-width: 1600px;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+
+}
+
+.Math .container {
+  background-color: #FEFAE0;
+  width: 90%;
+  max-width: 31.25em;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 5em 3em;
+  border-radius: 0.5em;
+}
+
+.Math .container h2 {
+  font-size: 1.2em;
+  background-color: #FEFAE0;
+  color: #2a2b38;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8em;
+}
+
+.Math .container #submit {
+  font-size: 1.2em;
+  font-weight: 500;
+  display: block;
+  margin: 0 auto;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  border-radius: 0.3em;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #FEFAE0;
+  padding: 0.6em 2em;
+}
+
+.Math #msg {
+  text-align: center;
+  margin-top: 1em;
+  background-color: #ffdde0;
+  color: #d62f2f;
+  padding: 0.2em 0;
+}
+
+.Math .container #question {
+  background-color: #FEFAE0;
+  font-size: 2em;
+  font-weight: 600;
+  color: #2a2b38;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.4em 0 1em 0;
+  padding: 1em 0;
+}
+
+.Math .container input {
+  font-size: 1em;
+  font-weight: 600;
+  width: 2.35em;
+  color: #2a2b38;
+  text-align: center;
+  padding: 0 0.2em;
+  border: none;
+  background-color: transparent;
+  border-bottom: 0.12em solid #1f2029;
+  margin: 0 0.25em;
+}
+
+.Math .container input:focus {
+  border-color: #2a2b38;
+  outline: none;
+}
+
+/*Hide Number Arrows*/
+.Math .container input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.Math .container input[type="number"]::-webkit-outer-spin-button,
+.Math .container input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.Math .controls-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+/* 
+.logoutbtn {
+  margin-right: 20px;
+  background-color: #2a2b38;
+  border: none;
+  border-radius: 3px;
+  color: #FEFAE0;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+} */
+
+.Math #start {
+  font-size: 1.2em;
+  font-weight: 500;
+  background-color: #FEFAE0;
+  color: #2a2b38;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.8em 1.8em;
+  border-radius: 0.3em;
+
+  /* display: flex;
+  justify-content: center; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.Math .controls-container #info {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #FEFAE0;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: lighter;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.Math .controls-container #info strong {
+  font-size: 1.1rem;
+}
+
+.Math .onclick-hist {
+  font-size: 1em;
+  font-weight: 500;
+  color: #2a2b38;
+  background-color: #FEFAE0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.3em 1.8em;
+  border-radius: 0.3em;
+
+
+}
+
+.Math #result {
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  color: #FEFAE0;
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.Math #result span {
+  font-weight: 600;
+}
+
+.Math .history {
+  /* display: absolute;
+  align-self: center; */
+  margin-top: 20px;
+  padding-left: 40px;
+}
+
+.Math .history h4 {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #FEFAE0;
+  margin-bottom: 20px;
+}
+
+.Math #hist {
+  color: #FEFAE0;
+}
+
+.hide {
+  display: none;
+}
+
+/* MathT */
+.MathT h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 20px;
+}
+
+.MathT h3 {
+  padding-left: 40px;
+  padding-bottom: 50px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.MathT h3 strong {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.MathT .information strong {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.MathT h4 {
+  color: #2a2b38;
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: underline dotted;
+}
+
+.MathT .container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.MathT .flip-card {
+  width: 350px;
+  height: 400px;
+  perspective: 1000px;
+  padding-left: 30px;
+  margin-bottom: 110px;
+}
+
+.MathT .flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.MathT .flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.MathT .flip-card-front,
+.MathT .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+.MathT .flip-card-front {
+  background-color: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.MathT .flip-card-front img {
+  border-radius: 3px;
+  width: 280px;
+  max-height: 100%;
+}
+
+.MathT .flip-card-back {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #FEFAE0;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MathT .card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.MathT .card-content h2 {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.MathT .card-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.MathT .btn {
+  padding: 10px 20px;
+  background-color: #FEFAE0;
+  color: #2a2b38;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.MathT .btn:hover {
+  background-color: #7D869C;
+  color: #FEFAE0;
+}
+
+.MathT .attribute {
+  position: absolute;
+  bottom: 10px;
+}
+
+.MathT .footer {
+  margin-top: 30px;
+}
+
+.MathC .container {
+  margin-top: 30px;
+  display: flex;
+
+}
+
+
+.MathC .container .CommentTable {
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin-bottom: 20px;
+  width: 650px;
+  margin-left: 60px;
+  margin-top: 30px;
+}
+
+.MathC .container #noDataTable .noData {
+  margin-left: 60px;
+  margin-top: 30px;
+}
+
+.MathC .container .CommentsIDsz {
+  display: none
+}
+
+.MathC .container .postComments {
+  margin-top: 30px;
+}
+
+.MathC .container .postComments textarea {
+  width: 650px;
+  height: 112px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 60px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FEFAE0;
+}
+
+.MathC .container #data .CommentTable {
+  font-size: 1.05rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.MathC .container #data .CommentTable button {
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #FEFAE0;
+}
+
+.MathC .container #data .CommentTable button:hover {
+  background-color: #102770;
+  color: #FEFAE0;
+}
+
+.MathC .container .postComments #PostBtn {
+  margin-left: 670px;
+  margin-top: 10px;
+  background-color: #FEFAE0;
+  ;
+  border: none;
+  border-radius: 3px;
+}
+
+.MathC footer {
+  margin-top: 60px;
+}
+
+.MathC .editTable {
+  min-width: 1600px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.MathC .editTable textarea {
+  width: 400px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.MathC .editTable button {
+  margin-left: 350px;
+}
+.MathF{
+  min-height: 650px;
+}
+
+.MathF .container {
+  width: 1600px;
+  min-height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Math .footer{
+  /* margin-top: 100px; */
+}
+.MathF .container .commentsDataa{
+  display: flex;
+  justify-content: center;
+}

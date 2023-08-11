@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Login</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./adminLogin.css">
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <div class="card">
+                            <div class="center-wrap">
+                                <div class="section text-center">
+                                    <h4 class="mb-4 pb-3">Admin Log In</h4>
+                                    <div class="form-group">
+                                        <input type="email" name="logemail" class="form-style" placeholder="Your Email"
+                                            id="logemail" autocomplete="off">
+                                        <i class="input-icon uil uil-at"></i>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <input type="password" name="logpass" class="form-style"
+                                            placeholder="Your Password" id="logpass" autocomplete="off">
+                                        <i class="input-icon uil uil-lock-alt"></i>
+                                    </div>
+                                    <button class="btn mt-4" id="LogBtn">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+
+        $("#LogBtn").click(function (event) {
+            // prevent page reload
+            event.preventDefault();
+
+            const email = $("#logemail").val();
+            const password = $("#logpass").val();
+            const requestBody = {
+                email: email,
+                password: password
+            };
+
+            axios.post(`${baseUrl}/api/login/adminverify`, requestBody)
+                .then((response) => {
+                    const token = response.data.token;
+                    const loggedInUserID = response.data.userid;
+                    console.log(loggedInUserID); //
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("loggedInUserID", loggedInUserID);
+                    //change this to the admin page 
+                    window.location.href = `${baseUrl}/admin.html`;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 401) {
+                        alert("Wrong login info");
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+                });
+        });
+    </script>
+
+</body>
+
+</html>

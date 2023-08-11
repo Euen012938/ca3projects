@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="health.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+
+  <title>Health Knowledge</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Health Flashcards</h1>
+    <button id="flashcardButton">Get Flashcard</button>
+    <div id="flashcardContainer"></div>
+  </div>
+
+  <script>
+    const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+    
+    const token = localStorage.getItem("token");
+    const userid = parseInt(localStorage.getItem("loggedInUserID"));
+
+    if (token === null || isNaN(userid)) {
+      alert('Require Admin....')
+      window.location.href = `${baseUrl}/index.html`;
+    } else {
+      function showFlashcard(HealthTerms, Explanation, Questions, Answers) {
+        // Create flashcard content
+        let flashcardContent = `
+
+        <h2>Question :</h2>
+        <p>${Questions}</p>
+        <input type="text" id="userAnswer" placeholder="Enter your answer">
+        <button id="submitAnswer">Submit</button>
+      `;
+
+        // Display flashcard content
+        $('#flashcardContainer').html(flashcardContent);
+
+        // Attach event handler to the submit button
+        let submitButton = document.getElementById("submitAnswer");
+        submitButton.addEventListener('click', function () {
+          checkAnswer(Answers);
+        });
+      }
+
+      function checkAnswer(correctAnswer) {
+        // Get user's answer
+        let userAnswer = document.getElementById("userAnswer").value;
+
+        // Check if user's answer matches the correct answer
+        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+          alert("Congrats! You are such a health expert");
+        } else {
+          alert("Ohhh very close...");
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+
+
+        const randomValue = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+        const id = randomValue(1, 6);
+
+        const cardButton = document.getElementById("flashcardButton");
+        cardButton.onclick = function () {
+          axios.get(`${baseUrl}/api/Health/${id}`)
+            .then((response) => {
+              if (response.data && response.data.length !== 0) {
+                console.log(response.data[0])
+                let flashcard = response.data[0]; // Get the first flashcard
+                console.log(flashcard[0].Explanation);
+                let flashcardHtml = `
+                <div class="card" onclick="showFlashcard('${flashcard[0].HealthTerms}', '${flashcard[0].Explanation}', '${flashcard[0].Questions}', '${flashcard[0].Answers}')">
+                  <p>${flashcard[0].HealthTerms}</p>
+                  <p>${flashcard[0].Explanation}</p>
+                </div>
+              `;
+                $('#flashcardContainer').html(flashcardHtml);
+              } else {
+                alert('Error Loading Flashcards');
+              }
+            })
+            .catch((error) => {
+              alert("Something went wrong");
+            });
+        };
+
+        function checkAnswer(correctAnswer) {
+          // Get user's answer
+          let userAnswer = document.getElementById("userAnswer").value;
+
+          // Check if user's answer matches the correct answer
+          if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            alert("Congrats! You are such a health expert");
+          } else {
+            alert("Ohhh very close...");
+
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

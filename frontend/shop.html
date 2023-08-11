@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="shop.css"> <!-- Create and link your own shop.css stylesheet -->
+</head>
+<body>
+  <nav>
+    <a href="./frontpage.html" class="navbar-link-left">E-Learning Gift Page</a>
+    <a href="./frontpage.html" class="navbar-link-right">Back home</a>
+  </nav>
+  <div class="container">
+    <div class="home-screen">
+
+     
+      <div class="gift-images">
+        <img src="/frontend/images/gift1.jpg" alt="Gift Image 1" class="gift-image">
+        <img src="/frontend/images/gift2.jpg" alt="Gift Image 2" class="gift-image">
+        <img src="/frontend/images/gift3.jpg" alt="Gift Image 3" class="gift-image">
+      </div>
+      <div class="gifts-section">
+        <h2>Gifts</h2>
+        <ul id="giftList" class="gift-list"></ul>
+      </div>
+
+      <div class="quests-section">
+        <h2>Quests</h2>
+        <ul id="questList" class="quest-list"></ul>
+      </div>
+
+      <div class="user-section">
+        <h2>Users</h2>
+        <select id="userSelect" name="userSelect">
+          <option value="" disabled selected>Select a User</option>
+          <!-- Populate this select element using JavaScript -->
+        </select>
+        
+        <!-- Display the selected username -->
+        <p id="selectedUsername"></p>
+        
+        <!-- Button to fetch and display coin balance -->
+        <button class="btn fetch-coins-btn">OK</button>
+        
+        <!-- Container to display the coin balance -->
+        <div id="coinBalanceContainer">
+          Coin Balance: <span id="coinBalanceValue"></span>
+        </div>
+      </div>
+
+      <div class="redeem-section">
+        <h2>Redeem Gifts</h2>
+        <label for="giftSelect">Select a Gift:</label>
+        <select id="giftSelect" name="giftSelect">
+          <option value="" disabled selected>Select a Gift</option>
+          <!-- Populate this select element using JavaScript -->
+        </select>
+        <button class="btn redeem-btn">Redeem</button>
+      </div>
+    </div>
+
+    <div class="end-screen hide">
+      <h1 class="heading">Shop</h1>
+      <div class="score">
+        <span class="score-text">Your Coins:</span>
+        <div>
+          <span class="final-coins">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const apiUrl = '/api'; // Use /api as the base URL for API requests
+
+    // Function to fetch and display coins
+    const displayCoins = () => {
+      fetch(`${apiUrl}/shop/coins/Nit`) // Replace 'Nit' with the actual username
+        .then(response => response.json())
+        .then(data => {
+          const coinBalanceElement = document.getElementById('coinBalance');
+          coinBalanceElement.innerText = `Coin Balance: ${data.balance}`;
+        })
+        .catch(error => console.error('Error fetching coins:', error));
+    };
+
+    document.querySelector('.fetch-coins-btn').addEventListener('click', () => {
+  const selectedUsername = document.getElementById('userSelect').value;
+  if (selectedUsername) {
+    fetch(`${apiUrl}/shop/coins/${selectedUsername}`)
+      .then(response => response.json())
+      .then(data => {
+        const coinBalanceValue = document.getElementById('coinBalanceValue');
+        coinBalanceValue.textContent = data.balance;
+        document.getElementById('coinBalanceContainer').style.display = 'block';
+      })
+      .catch(error => console.error('Error fetching coin balance:', error));
+  }
+});
+    // Function to fetch and display gifts
+    const displayGifts = () => {
+      fetch(`${apiUrl}/shop/gifts`)
+        .then(response => response.json())
+        .then(data => {
+          const giftListElement = document.getElementById('giftList');
+          const gifts = data.gifts;
+          gifts.forEach(gift => {
+            const option = document.createElement('option');
+            option.value = gift.name;
+            option.textContent = `${gift.name} - ${gift.description} (Cost: ${gift.cost})`;
+            document.getElementById('giftSelect').appendChild(option);
+            const li = document.createElement('li');
+            li.innerText = `${gift.name} - ${gift.description} (Cost: ${gift.cost})`;
+            giftListElement.appendChild(li);
+          });
+        })
+        .catch(error => console.error('Error fetching gifts:', error));
+    };
+
+    // Function to fetch and display quests
+    const displayQuests = () => {
+      fetch(`${apiUrl}/shop/quests`)
+        .then(response => response.json())
+        .then(data => {
+          const questListElement = document.getElementById('questList');
+          const quests = data.quests;
+          quests.forEach(quest => {
+            const li = document.createElement('li');
+            li.innerText = `${quest.quest} (Reward: ${quest.reward})`;
+            questListElement.appendChild(li);
+          });
+        })
+        .catch(error => console.error('Error fetching quests:', error));
+    };
+
+    // Function to fetch and display usernames
+    const displayUsernames = () => {
+      axios.get(`${apiUrl}/shop/usernames`)
+        .then(response => {
+          const userSelectElement = document.getElementById('userSelect');
+          const users = response.data.users;
+          users.forEach(user => {
+            const option = document.createElement('option');
+            option.value = user.userid;
+            option.textContent = `${user.username} (Coins: ${user.coin_balance})`;
+            userSelectElement.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Error fetching usernames:', error));
+    };
+
+    // Function to redeem a gift
+    const redeemGift = (username, giftName) => {
+  axios.post(`${apiUrl}/shop/redeem/${username}/${giftName}`)
+    .then(response => {
+      alert(response.data.message);
+      // Make sure to call the displayCoins function with the correct parameters if needed
+      displayCoins(username);
+    })
+    .catch(error => console.error('Error redeeming gift:', error));
+};
+const fetchAndDisplayCoins = (selectedUsername) => {
+  axios.get(`${apiUrl}/shop/coins/${selectedUsername}`)
+    .then(response => {
+      const coinBalanceValue = document.getElementById('coinBalanceValue');
+      coinBalanceValue.textContent = response.data.balance;
+    })
+    .catch(error => console.error('Error fetching coin balance:', error));
+};
+
+// Event listener for OK button
+document.querySelector('.fetch-coins-btn').addEventListener('click', () => {
+  const selectedUsername = document.getElementById('userSelect').value;
+  if (selectedUsername) {
+    fetchAndDisplayCoins(selectedUsername);
+  } else {
+    alert('Please select a user before fetching coin balance.');
+  }
+});
+
+    // Call the functions to display coins, gifts, quests, and usernames when the page loads
+    displayCoins();
+    displayGifts();
+    displayQuests();
+    displayUsernames();
+
+    // Event listener for redeem button
+    document.querySelector('.redeem-btn').addEventListener('click', () => {
+      const selectedUser = document.getElementById('userSelect').value;
+      const selectedGift = document.getElementById('giftSelect').value;
+      if (selectedUser && selectedGift) {
+        redeemGift(selectedUser, selectedGift);
+      } else {
+        alert('Please select a user and a gift before redeeming.');
+      }
+    });
+  </script>
+</body>
+</html>

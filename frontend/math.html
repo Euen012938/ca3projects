@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Game</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="math.css" />
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h2>Fill In The Blank</h2>
+        <div id="question"></div>
+        <button id="submit">Submit</button>
+        <p id="msg"></p>
+    </div>
+    <div class="controls-container">
+        <nav>
+            <div>
+                <a href="./frontpage.html">Home</a>
+                <a href="./mathTutorial.html">Tutorial</a>
+                <a href="./math.html">Math Games</a>
+                <a href="./mathComment.html">Math Comments</a>
+                <a href="./mathfeedback.html">Feedbacks</a>
+            </div>
+            <button class="logoutbtn" onclick="logoutFunction()">Log Out</button>
+        </nav>
+
+        <p id="result"></p>
+        <button id="start">Start Game</button>
+        <p id="info">This game aims to cultivate children's mathematical skills by helping them grasp and appreciate the
+            fundamentals of arithmetic. Kids are tasked with solving equations, and various question types are randomly
+            presented to them. This game is designed to effectively train children in arithmetic operations. <br />
+            <strong>
+                'Start Game' to start practice now!!</strong>
+        </p>
+
+        <div class="history">
+            <h4>Game History Results</h4>
+            <button class="onclick-hist">Open!</button>
+            <div id="hist"></div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 E-Learning. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let operators = ["+", "-", "*"];
+        const start = document.getElementById("start");
+        const question = document.getElementById("question");
+        const controls = document.querySelector(".controls-container");
+        const result = document.getElementById("result");
+        const submit = document.getElementById("submit");
+        const msg = document.getElementById("msg");
+        const HistDiv = document.querySelector('.history')
+        const HistBtn = document.querySelector(".onclick-hist");
+        const histHTML = document.getElementById("hist");
+        const info = document.getElementById('info')
+        let answerValue;
+        let operatorQuestion;
+        let totalGame = 0;
+        let score = 0;
+
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+        const token = localStorage.getItem("token");
+        const userid = parseInt(localStorage.getItem("loggedInUserID"));
+
+        if (token === null || isNaN(userid)) {
+            alert('Require Admin....')
+            window.location.href = `${baseUrl}/index.html`;
+        } else {
+
+            function logoutFunction() {
+                event.preventDefault();
+
+                console.log(localStorage.getItem("loggedInUserID")); //
+                localStorage.setItem("token", null);
+                localStorage.setItem("loggedInUserID", '');
+                window.location.href = `${baseUrl}/index.html`;
+
+            }
+
+            //get prev games history 
+            $('.onclick-hist').click(function (event) {
+                event.preventDefault();
+
+                axios.get(`${baseUrl}/api/math/hist`, { params: { userid: userid } })
+                    .then((res) => {
+                        console.log(res.data + 'b')
+                        HistBtn.classList.add("hide");
+
+                        const htmlData = res.data
+                        for (i = 0; i < htmlData.length; i++) {
+                            const eachValue = res.data[i].hist + ' '
+                            histHTML.append(eachValue);
+                        }
+                        console.log(res)
+                        if(res.data == ''){
+                            const html = `You haven't played to game before. Start button is at the below!!!`
+                            histHTML.append(html)
+                        }
+                    })
+                    .catch((error) => {
+                        alert('No Data Saved before! Start by doing a Math Game')
+                    })
+            })
+
+            // Game setup
+
+            //Random Value Generator
+            const randomValue = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
+            const questionGenerator = () => {
+                //Two random values between 1 and 20
+                let [num1, num2] = [randomValue(1, 20), randomValue(1, 20)];
+                //For getting random operator
+                let randomOperator = operators[Math.floor(Math.random() * operators.length)];
+
+                if (randomOperator == "-" && num2 > num1) {
+                    [num1, num2] = [num2, num1];
+                }
+                //Solve equation
+                let solution = eval(`${num1}${randomOperator}${num2}`);
+
+                //For placing the input at random position
+                //(1 for num1, 2 for num2, 3 for operator, anything else(4) for solution)
+                let order = randomValue(1, 5);
+
+                if (order == 1) {
+                    answerValue = num1;
+                    question.innerHTML = `<input type="number" id="inputValue" placeholder="?"\> ${randomOperator} ${num2} = ${solution}`;
+                } else if (order == 2) {
+                    answerValue = num2;
+                    question.innerHTML = `${num1} ${randomOperator}<input type="number" id="inputValue" placeholder="?"\> = ${solution}`;
+                } else if (order == 3) {
+                    answerValue = randomOperator;
+                    operatorQuestion = true;
+                    question.innerHTML = `${num1} <input type="text" id="inputValue" placeholder="?"\> ${num2} = ${solution}`;
+                } else {
+                    answerValue = solution;
+                    question.innerHTML = `${num1} ${randomOperator} ${num2} = <input type="number" id="inputValue" placeholder="?"\>`;
+                }
+
+                //User Input Check
+                submit.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    msg.classList.add("hide");
+                    let userInput = document.getElementById("inputValue").value;
+                    //If user input is not empty
+                    if (userInput) {
+                        increment();
+                        if (totalGame === 325) {
+                            endGame("Finish 25 Qn")
+                        }
+                        //If the user guessed correct answer
+                        else if (userInput == answerValue) {
+                            output(`Yippie!! Correct Answer`, true);
+                        }
+                        //If user inputs operator other than +,-,*
+                        else if (operatorQuestion && !operators.includes(userInput)) {
+                            msg.classList.remove("hide");
+                            msg.innerHTML = "Please enter a valid operator";
+                        }
+                        //If user guessed wrong answer
+                        else {
+                            output(`Opps!! Wrong Answer`, false);
+                        }
+                    }
+                    //If user input is empty
+                    else {
+                        msg.classList.remove("hide");
+                        msg.innerHTML = "Input Cannot Be Empty";
+                    }
+                });
+            };
+
+            //Start Game
+            start.addEventListener("click", () => {
+                operatorQuestion = false;
+                answerValue = "";
+                msg.innerHTML = "";
+                msg.classList.add("hide");
+                //Controls and buttons visibility
+                controls.classList.add("hide");
+                start.classList.add("hide");
+                HistDiv.classList.add("hide");
+                info.classList.add('hide')
+                questionGenerator();
+            });
+            //Increment each score
+            const increment = () => {
+                totalGame++
+                console.log(totalGame)
+            }
+            //check if correct or wrong 
+            const output = (resultText, text) => {
+                if (text === true) {
+                    score = score + 1;
+                    console.log(score)
+                }
+                result.innerHTML = resultText;
+                start.innerText = "Next";
+                controls.classList.remove("hide");
+                start.classList.remove("hide");
+            };
+            //end game and sned hist into db
+            const endGame = (resultText) => {
+                result.innerHTML = resultText;
+                start.innerText = "New Game";
+                controls.classList.remove("hide");
+                start.classList.remove("hide");
+                HistDiv.classList.remove("hide")
+                info.classList.remove('hide')
+                let totalScore = `${score}/${totalGame}`;
+
+                const requestBody = {
+                    userid: userid,
+                    totalScore: totalScore
+                }
+
+                axios.post(`${baseUrl}/api/math/`, requestBody)
+                    .then((res) => {
+                        console.log('succesfully send into db')
+                    }).catch((error) => {
+                        console.log(error);
+                        alert("Something unexpected went wrong.");
+                    })
+
+                totalGame = 0;
+                score = 0;
+                totalScore = '';
+                console.log(totalGame + 'a' + score + 'a' + 'b' + totalScore)
+            };
+        }
+    </script>
+</body>
+
+</html>

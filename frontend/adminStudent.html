@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="adminStudent.css">
+
+</head>
+<body>
+    <div id="search">
+        <button id="back" class="btn btn-light" onclick="window.location.href ='admin.html'">Back</button>
+        <input type="text" placeholder="Enter.." id="search-bar" style="height:2.5rem">
+    </div>
+
+    <h1 id="h1">All Students</h1>
+    <button id="add" class="btn btn-light" onclick="window.location.href ='addStudent.html'" >Add Students +</button>
+    <div class="t-container p-5">
+        <table class="table table-bordered" id="table">
+            <thead>
+                <tr id="no">
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="mobile-form">
+        <h2>Update Student</h2>
+        <div>
+            <ul>
+                <li>
+                    <input type="text" name="signUsername" class="form-style"
+                    placeholder="Username" id="username" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="signFirstname" class="form-style"
+                    placeholder="Firstname" id="firstname" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="signLastname" class="form-style"
+                    placeholder="Lastname" id="lastname" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="email" class="form-style"
+                    placeholder="Email" id="email" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="password" class="form-style"
+                    placeholder="Password" id="password" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="age" class="form-style"
+                    placeholder="Age" id="age" autocomplete="off">
+                </li>
+                <li>
+                    <input type="text" name="level" class="form-style"
+                    placeholder="Level" id="level" autocomplete="off">
+                </li>
+                <button class="btn mt-4" id="submit">Submit</button>
+              </ul>
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+        const update = document.getElementById("update");
+        const deletee = document.getElementById("delete");
+
+
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+        const searchinput = document.getElementById('search-bar');
+        let users = [];
+
+
+///////////////////////////////////SEARCHBAR///////////////////////////////////
+        searchinput.addEventListener("keyup", (e) => {
+            const value = e.target.value
+            console.log(value)
+            const filteredQn = users.filter( student => {
+                return (
+                    student.username.includes(value) ||
+                    student.firstname.includes(value) ||
+                    student.lastname.includes(value) ||
+                    student.email.includes(value) ||
+                    student.password.includes(value) ||
+                    student.age.includes(value)
+                )
+            })
+            console.log(filteredQn)
+            let text;
+            for(i=0; i < filteredQn.length; i++){
+                let studentss = 
+                `
+                <tr>
+                    <td>${filteredQn[i].userid}</td>
+                    <td>${filteredQn[i].username}</td>
+                    <td>${filteredQn[i].firstname}</td>
+                    <td>${filteredQn[i].lastname}</td>
+                    <td>${filteredQn[i].email}</td>
+                    <td>${filteredQn[i].password}</td>
+                    <td>${filteredQn[i].age}</td>
+                    <td>
+                        <button id='update' class="btn btn-warning" onclick='updaterow(${filteredQn[i].userid})'>Update</button> |
+                        <button id='delete' class="btn btn-danger" onclick='deleterow(${filteredQn[i].userid})'>Delete</button>
+                    </td>
+                </tr>
+                `;
+                text += studentss 
+            $('#table-body').html(text);
+            }
+
+
+        })
+
+
+///////////////////////////////////GETTING STUDENTS INFO///////////////////////////////////       
+        axios.get(`${baseUrl}/api/admin/student`)
+        .then((response)=>{
+            console.log(response.data[0]);
+            let student = response.data[0];
+            let text;
+            for(i=0; i < student.length; i++){
+                let studentss = 
+                `
+                <tr>
+                    <td>${student[i].userid}</td>
+                    <td>${student[i].username}</td>
+                    <td>${student[i].firstname}</td>
+                    <td>${student[i].lastname}</td>
+                    <td>${student[i].email}</td>
+                    <td>${student[i].password}</td>
+                    <td>${student[i].age}</td>
+                    <td>
+                        <button id='update' class="btn btn-warning" onclick='updaterow(${student[i].userid})'>Update</button> |
+                        <button id='delete' class="btn btn-danger" onclick='deleterow(${student[i].userid})'>Delete</button>
+                    </td>
+                </tr>
+                `;
+                text += studentss 
+            $('#table-body').html(text);
+            users = student
+            }
+
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+
+///////////////////////////////////DELETING A STUDENT///////////////////////////////////
+        const deleterow = (id)=>{
+            axios.delete(`${baseUrl}/api/admin/student/${id}`)
+            .then((response)=>{
+                console.log(response.data);
+                alert('u deleted a student!');
+                window.location.href='adminStudent.html';
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        };
+
+
+///////////////////////////////////UPDATING A STUDENT///////////////////////////////////
+        const updaterow = (id)=>{
+
+            $("#t-container").hide();
+            $("#table").hide();
+            $("#add").hide();
+            $("h1").hide();
+            $("#back").hide();
+            $("#mobile-form").show();
+
+            //submitting the form
+            $('#submit').click(function(event){
+            event.preventDefault();
+
+            const username = $('#username').val();
+            const firstname = $('#firstname').val();
+            const lastname = $('#lastname').val();
+            const email = $('#email').val();
+            const password = $('#password').val();
+            const age = $('#age').val();
+            const level = $('#level').val();
+
+            let body = {
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                password: password,                
+                age: age,
+                level: level
+            }
+
+            axios.put(`${baseUrl}/api/admin/student/${id}`, body)
+            .then((response)=>{
+                console.log(response.data);
+                alert('Updated Successfully!');
+                window.location.href = 'adminStudent.html';
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        })
+
+        };
+
+            
+        
+
+
+
+    </script>
+    
+</body>
+</html>

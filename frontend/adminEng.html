@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All English Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="adminStudent.css">
+</head>
+<body>
+    <h1>All Questions</h1>
+    <button id="add" class="btn btn-primary" onclick="insertrow()">Add Questions +</button>
+    
+    <div class="t-container p-5">
+        <table class="table table-bordered" id="table">
+            <thead>
+                <tr id="no">
+                    <th>ID</th>
+                    <th>Question</th>>
+                    <th>Correct Answer</th>
+                    <th>Category Id</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="mobile-form">
+        <h2>Update Question</h2>
+        <div>
+            <ul>
+                <div id="">
+                    <li>
+                        <input type="text" name="question" class="form-style"
+                        placeholder="question" id="question2" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="incorrect1" class="form-style"
+                        placeholder="incorrect1" id="secondincorrect1" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="incorrect2" class="form-style"
+                        placeholder="incorrect2" id="secondincorrect2" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="incorrect3" class="form-style"
+                        placeholder="incorrect3" id="secondincorrect3" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="correct" class="form-style"
+                        placeholder="correct answer" id="correct" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="category" class="form-style"
+                        placeholder="categoryid" id="categoryid" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="category" class="form-style"
+                        placeholder="categoryname" id="categoryname" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="quiz" class="form-style"
+                        placeholder="quizid" id="quizid" autocomplete="off">
+                    </li>
+                    <li>
+                        <input type="text" name="quiz" class="form-style"
+                        placeholder="quizname" id="quizname" autocomplete="off">
+                    </li>
+                </div>
+                <button class="btn mt-4" id="submit">Submit</button>
+              </ul>
+        </div>
+    </div>
+
+        <div id="form">
+            <h2>Add Question</h2>
+            <div>
+                <div id="form1" class="row">
+                    <ul>
+                        <div id="form2">
+                            <div id="qn">
+                                <li>
+                                    <input type="text" name="question" class="form-style"
+                                    placeholder="question" id="question" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="incorrect1" class="form-style"
+                                    placeholder="incorrect1" id="incorrect1" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="incorrect2" class="form-style"
+                                    placeholder="incorrect2" id="incorrect2" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="incorrect3" class="form-style"
+                                    placeholder="incorrect3" id="incorrect3" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="correct_answer" class="form-style"
+                                    placeholder="correct_answer" id="correct_answer" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="category_id" class="form-style"
+                                    placeholder="category_id" id="category_id" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="category_name" class="form-style"
+                                    placeholder="category_name" id="category_name" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="quiz" class="form-style"
+                                    placeholder="quizid2" id="quizid2" autocomplete="off">
+                                </li>
+                                <li>
+                                    <input type="text" name="quiz" class="form-style"
+                                    placeholder="quizname2" id="quizname2" autocomplete="off">
+                                </li>
+                            </div>
+                        </div>
+                        <button class="btn mt-4" id="add-submit">Submit</button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+
+        axios.get(`${baseUrl}/api/english/alleng`)
+        .then((response)=>{
+            console.log(response.data[0])
+            let question = response.data[0];
+            let text;
+            for(i=0; i < question.length; i++){
+                let english = 
+                `
+                <tr>
+                    <td>${question[i].id}</td>
+                    <td>${question[i].question}</td>
+                    <td>${question[i].correct_answer}</td>
+                    <td>${question[i].category_id}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="updaterow(${question[i].id})">Update</button> |
+                        <button class="btn btn-danger" onclick="deleterow(${question[i].id})">Delete</button>
+                    </td>
+                </tr>
+                `;
+                text += english 
+            $('#table-body').html(text);
+            }
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+///////////////////////////////////DELETING ROW///////////////////////////////////
+        const deleterow = (id) => {
+            axios.delete(`${baseUrl}/api/english/${id}`)
+            .then((response)=>{
+                console.log(response.data);
+                window.location.href='adminEng.html';
+                alert('Question deleted');
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        };
+///////////////////////////////////INSERT ROW///////////////////////////////////
+        const insertrow = () => {
+            $("#t-container").hide();
+            $("#table").hide();
+            $("#add").hide();
+            $("h1").hide();
+            $('#search-bar').hide();
+            $('#search').hide();
+            $("#back").hide();
+            $("#form").show();
+
+            $('#add-submit').click(function(event){
+                event.preventDefault();
+
+                const question = $('#question').val();
+                const incorrect1 = $('#incorrect1').val();
+                const incorrect2 = $('#incorrect2').val();
+                const incorrect3 = $('#incorrect3').val();
+                const correct_answer = $('#correct_answer').val();
+                const category_id = $('#category_id').val();
+                const category_name = $('#category_name').val()
+                const quiz_id = $('#quizid2').val()
+                const quizname =$('#quizname2').val()
+
+                let body = {
+                    question : question,
+                    incorrect1 : incorrect1,
+                    incorrect2 : incorrect2,
+                    incorrect3 : incorrect3,
+                    correct_answer : correct_answer,
+                    category_id: category_id,
+                    category_name: category_name,
+                    quiz_id: quiz_id,
+                    quizname: quizname
+                };
+
+
+
+                    axios.post(`${baseUrl}/api/english/insert`, body)
+                    .then((response)=>{
+                        const result = response;
+                    console.log(result);
+                        window.location.href='adminEng.html';
+                        alert('Question inseted');
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+            })
+        
+
+            
+        }
+
+///////////////////////////////////UPDATE ROW///////////////////////////////////
+        const updaterow = (id) => {
+
+            $("#t-container").hide();
+            $("#table").hide();
+            $("#add").hide();
+            $('#search-bar').hide();
+            $('#search').hide();
+            $("h1").hide();
+            $("#back").hide();
+            $("#mobile-form").show();
+
+            $('#submit').click(function(event){
+                event.preventDefault();
+
+                
+                const question = $('#question2').val();
+                const incorrect1 = $('#secondincorrect1').val();
+                const incorrect2 = $('#secondincorrect2').val();
+                const incorrect3 = $('#secondincorrect3').val();
+                const correct_answer = $('#correct').val();
+                const category_id = $('#categoryid').val();
+                const category_name = $('#categoryname').val()
+                const quiz_id = $('#quizid').val()
+                const quizname =$('#quizname').val()
+
+                let body = {
+                    question : question,
+                    incorrect1 : incorrect1,
+                    incorrect2 : incorrect2,
+                    incorrect3 : incorrect3,
+                    correct_answer : correct_answer,
+                    category_id: category_id,
+                    category_name: category_name,
+                    quiz_id: quiz_id,
+                    quizname: quizname
+                };
+
+                axios.put(`${baseUrl}/api/english/update/${id}`, body)
+                .then((response)=>{
+                    const result = response;
+                    console.log(result);
+                    window.location.href='adminEng.html';
+                    alert('YAY YOU UPDATED A QUESTION!!!');
+                })
+                .catch((error)=>{
+                    console.log(error);
+                })
+
+
+            });
+        };
+
+        
+    </script>
+
+</body>
+</html>

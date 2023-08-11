@@ -1,0 +1,74 @@
+h1{
+    margin: 5%;
+    color: #FEFAE0;
+}
+
+#add {
+    margin-left: 5%
+}
+#mobile-form , #form , #adding-form{
+    margin: 0 auto;
+    display: none;
+    margin-left: 40%;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    width:20%;
+    padding: 3%
+}
+
+h2 {
+    margin-left: -1%;
+    color: white;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-top: 1em;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    height: 2em
+}
+
+#search-bar{
+    margin-left:2%;
+    margin-top:2%
+    
+}
+
+#search {
+    justify-content: center;
+    margin-left:2%;
+    margin-top: 3%
+}
+
+#search #search-bar {
+    height:2rem
+}
+
+
+#form2 {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+body {
+    background-color: #2a2b38;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+}
+
+table {
+    background-color: white;
+}
+
+label, #submit, #add-submit{
+    color:white;
+}
+

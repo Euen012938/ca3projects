@@ -1,0 +1,150 @@
+nav a {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #2a2b38;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+nav {
+    background-color: #FEFAE0;
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
+}
+
+#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-90%, -45%);
+}
+
+#q_container {
+    display: none;
+    border: solid;
+    border-radius: 10px;
+    background-color: #FEFAE0;
+    padding: 5%;
+    margin: 5%;
+}
+
+#container #revision , #container #learning {
+    border: solid;
+    border-radius: 10px;
+    width: 150%;
+    height: 50%;
+    padding: 23%;
+    background-color: #FEFAE0;
+    margin:15%;
+    justify-content: center;
+    box-shadow: 3px 3px 5px black;
+}
+
+#containers #heat , #containers #matter, #containers #living, #containers #digest {
+    border: solid;
+    border-radius: 10px;
+    width: 100%;
+    height:30%;
+    padding: 25%;
+    margin:30%;
+    justify-content: center;
+    box-shadow: 3px 3px 5px black;
+
+    #h3 {
+        color:#FEFAE0;
+        text-align: center;
+    }
+}
+
+body {
+    background-color: #2a2b38;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+}
+
+button {
+    background-color: #2a2b38;
+    border-radius: 5px;
+    font-size:  1.2rem;
+    align-content: center;
+    color: #FEFAE0;
+    font-family: 'Courier New', Courier, monospace;
+    width:60%;
+    height:max-content;
+}
+
+#questions {
+    font-size: 1.6rem;
+
+}
+
+input {
+    width: 30%;
+    height: 1.5rem;
+    border: 1px, solid, #ccc;  
+    border-radius:5px;
+    margin-bottom:3%;
+    margin-left:3%
+}
+
+/* multiple choice questions */
+ul {
+    list-style-type: none;
+}
+
+#options {
+    margin:3%;
+    margin-left:5%
+}
+
+label {
+    cursor: pointer;
+    position: relative;
+    font-size: 1.4rem
+}
+
+#title {
+    margin-top:2%;
+    margin-left:2%;
+    color:#FEFAE0;
+}
+
+#containers {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -45%);
+    display: flex;
+}
+
+#in-container1 , #in-container2{
+    width:50%;
+    margin:2%;
+    padding:2%
+}
+
+#matterback , #heatback{
+    width: 5%;
+    margin:2%;
+    background-color:#FEFAE0;
+}
+
+#NumQns, #end, #NumQns2{
+    display:none;
+    
+}
+
+#NumQns h1 , #end p, #NumQns h1, #NumQns2 h1{
+    color:#FEFAE0;
+}
+
+#NumQns, #NumQns2 {
+    position: absolute;
+    top: 40%;
+    left: 38%;
+    width: 40%;
+}
+
+

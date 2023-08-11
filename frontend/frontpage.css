@@ -1,0 +1,111 @@
+body,
+* {
+  background-size: cover;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  padding: 20px;
+}
+
+h1 {
+  margin: 0;
+  color: white;
+}
+
+h5 {
+  text-align: center;
+}
+
+nav {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+}
+nav .btn{
+  background-color: white;
+  color: black;
+}
+
+main {
+  margin: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #2a2b38;
+}
+
+footer {
+  background-color: #2a2b38;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  padding: 10px;
+  text-align: center;
+  color: aliceblue;
+}
+
+.centering-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+
+}
+
+
+
+/* Style buttons */
+.btn {
+  background-color: #586994;
+  /* Blue background */
+  border: none;
+  /* Remove borders */
+  color: white;
+  /* White text */
+  padding: 12px 16px;
+  /* Some padding */
+  font-size: 16px;
+  /* Set a font size */
+  cursor: pointer;
+  /* Mouse pointer on hover */
+  margin-left: 10px;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: #7D869C;
+}
+
+
+.card-img-top {
+  width: 500px;
+  /* Set the desired width */
+  height: auto;
+  /* Automatically adjust the height while maintaining the aspect ratio */
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+
+  border-radius: 10px;
+}

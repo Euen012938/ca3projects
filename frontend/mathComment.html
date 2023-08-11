@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Comments</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="mathComment.css" />
+</head>
+
+<body>
+    <nav>
+        <div>
+            <a href="./frontpage.html">Home</a>
+            <a href="./mathTutorial.html">Tutorial</a>
+            <a href="./math.html">Math Games</a>
+            <a href="./mathComment.html">Math Comments</a>
+            <a href="./mathfeedback.html">Feedbacks</a>
+        </div>
+        <button class="logoutbtn" onclick="logoutFunction()">Log Out</button>
+    </nav>
+
+    <!--Posting Previous comments from db-->
+    <div class="container">
+        <div>
+            <h4>Comments:</h4>
+            <div id="data"></div>
+        </div>
+        <div class="right-side">
+            <h4>Posting New Comments: </h4>
+            <div class="postingNewComm">
+                <input type='text' id='PostingComment'></input><br />
+                <button id="PostBtn">Post</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 E-Learning. All rights reserved.</p>
+    </footer>
+    <!--Script-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+
+        let Data = []
+        const token = localStorage.getItem("token");
+        const userid = parseInt(localStorage.getItem("loggedInUserID"));
+
+        if (token === null || isNaN(userid)) {
+            alert('Require Admin....')
+            window.location.href = `${baseUrl}/index.html`;
+        } else {
+            function logoutFunction() {
+                event.preventDefault();
+
+                console.log(localStorage.getItem("loggedInUserID")); //
+                localStorage.setItem("token", null);
+                localStorage.setItem("loggedInUserID", '');
+                window.location.href = `${baseUrl}/index.html`;
+
+            }
+
+            axios.get(`${baseUrl}/api/math/comments`, { params: { userid: userid } })
+                .then((res) => {
+                    console.log(res.data + 'res.data');
+                    const CommentsData = res.data;
+
+                    if (res.data == '') {
+                        const html = `<div style="padding-left:10px; font-size:1rem">You haven't input a comment before!!</div>`
+                        $('#data').append(html)
+                    }
+                    for (i = 0; i < CommentsData.length; i++) {
+                        Data.push(CommentsData[i].comments)
+                        var number = i + 1;
+                        const html = `<div class='CommentTable' style='padding:30px; background-color: rgba(255, 255, 255, 0.1);
+                                  border-radius: 3px; margin-bottom: 20px;'>  
+                                  <div id='commentText'>${number}. ${CommentsData[i].comments}</div>
+                                  <div id='CommentsIDsz' style='display:none'>${i}</div>
+                                  <input type= 'text' id='EditComment' style='width:200px; height:30px; border-radius:5px'></input>
+                                  <button class='EditBtn'>Edit</button>
+                                  <button class='DelBtn'>Delete</button>    
+                                  </div>`
+                        $('#data').append(html)
+                    }
+                    $('.EditBtn').click(function (event) {
+                        event.preventDefault();
+                        console.log(document.getElementById('CommentsIDsz').innerHTML)
+                        const prev = Data[document.getElementById('CommentsIDsz').innerHTML]
+                        // const prev = $('#commentText').val()
+                        const comments = $('#EditComment').val()
+                        const requestBody = {
+                            prev: prev,
+                            comments: comments
+                        }
+                        axios.put(`${baseUrl}/api/math/comments`, requestBody)
+                            .then((res) => {
+                                console.log('succesfully send into db')
+                                console.log(prev + comments)
+                                alert('Changed')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    })
+
+                    $('.DelBtn').click(function (event) {
+                        event.preventDefault();
+                        console.log(document.getElementById('CommentsIDsz').innerHTML)
+                        const prev = Data[document.getElementById('CommentsIDsz').innerHTML]
+                        // const requestBody = {
+                        //     prev: prev
+                        // }
+                        axios.delete(`${baseUrl}/api/math/comments`, { data: { prev: prev } })
+                            .then((res) => {
+                                console.log('succesfully del into db')
+                                console.log(prev)
+                                alert('Changed')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    })
+                })
+                .catch((res) => {
+                    alert("No Comments was saved before!")
+                })
+
+            $("#PostBtn").click(function (event) {
+                const postData = $('#PostingComment').val()
+                const requestBody = {
+                    userid: userid,
+                    comments: postData
+                }
+                axios.post(`${baseUrl}/api/math/comments`, requestBody)
+                    .then((res) => {
+                        event.preventDefault();
+                        console.log('succesfully send into db');
+                        alert("Comments saved successfully!")
+                    })
+                    .catch((res) => {
+                        alert("Comments is not saved!")
+                    })
+
+            })
+
+        }
+    </script>
+</body>
+
+</html>

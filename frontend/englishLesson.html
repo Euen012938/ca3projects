@@ -1,0 +1,83 @@
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Lessons</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="englishLesson.css">
+</head>
+<body>
+    <button id="back" onclick="window.location.href='englishLsn.html'" class="btn">Back</button>
+      <div>
+        <div>
+        <h2>Basic Grammar Rules</h2>
+        <h4>20 Grammar Rules</h4>
+        <p>Here are 20 simple rules and tips to help you avoid mistakes in English grammar.</p>
+    </div>
+    <div>
+        <p>1. A sentence starts with a capital letter and ends with a period/full stop,<br> a question mark or an exclamation mark.</p>
+        <p>2. The order of a basic positive sentence is Subject-Verb-Object.<br> (Negative and question sentences may have a different order.)</p>
+        <p>3. Every sentence must have a subject and a verb. An object is optional.<br>
+             Note that an imperative sentence may have a verb only,<br> but the subject is understood.</p>
+        <p>4. The subject and verb must agree in number, that is a singular subject<br> needs a singular verb and a plural subject needs a plural verb.</p>
+        <p>5. When two singular subjects are connected by or, use a singular verb. <br>The same is true for either/or and neither/nor.</p>
+        <p>6. Adjectives usually come before a noun (except when a verb separates the adjective from the noun).</p>
+        <p>7. When using two or more adjectives together, the usual order is opinion-adjective + fact-adjective + noun.<br> 
+            (There are some additional rules for the order of fact adjectives.)</p>
+        <p>8. Treat collective nouns (e.g. committee, company, board of directors) as singular OR plural.<br> 
+            In BrE a collective noun is usually treated as plural, needing a plural verb and pronoun.<br>
+             In AmE a collective noun is often treated as singular, needing a singular verb and pronoun.
+             <li>The committee are having sandwiches for lunch. Then they will go to London. (typically BrE)</li>
+                <li>The BBC have changed their logo. (typically BrE)</li>
+                <li>My family likes going to the zoo. (typically AmE)</li>
+                <li>CNN has changed its logo. (typically AmE)</li>
+        </p>
+        <p>9. The words its and it's are two different words with different meanings.
+        <li>The dog has hurt its leg.</li>
+        <li>He says it's two o'clock.</li>
+    </p>
+        <p>10. The words your and you're are two different words with different meanings.
+            <li>Here is your coffee.</li>
+            <li>You're looking good.</li>
+        </p>
+        <p>11. The words there, their and they're are three different words with different meanings
+            <li>There was nobody at the party.</li>
+            <li>I saw their new car.</li>
+            <li>Do you think they're happy?</li>
+        </p>
+        <p>12. The contraction he's can mean he is OR he has. Similarly, she's can mean she is OR she has,<br>  
+            and it's can mean it is OR it has</p>
+        <p>13. The contraction he'd can mean he had OR he would. Similarly, they'd <br>
+            can mean they had OR they would.</p>
+        <p>14. Spell a proper noun with an initial capital letter. A proper noun is a "name"<br> 
+            of something, for example Josef</p>
+        <p>15. Spell proper adjectives with an initial capital letter. Proper adjectives are <br>
+            made from proper nouns, for example Germany → German</p>
+        <p>16. Use the indefinite article a/an for countable nouns in general.<br>
+         Use the definite article the for specific countable nouns and all uncountable nouns.</p>
+        <p>17. Use the indefinite article a with words beginning with a consonant sound.<br>
+             Use the indefinite article an with words beginning with a vowel sound. </p>
+        <p>18. Use many or few with countable nouns. Use much/a lot or little for uncountable nouns.</p>
+        <p>19. To show possession (who is the owner of something) use an apostrophe + s for singular owners,<br>
+             and s + apostrophe for plural owners.
+        </p>
+        <p>20. In general, use the active voice (Cats eat fish) in preference <br>
+            to the passive voice (Fish are eaten by cats).</p>
+    </div>
+      </div>
+      <script>
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        /////////////////////////////////////////////////////////////////////
+        // For local development 
+        // with React in Port 3001 and Express in Port 3000
+        /////////////////////////////////////////////////////////////////////
+        if (window.location.hostname === "localhost" && window.location.port === "3001") {
+            baseUrl = window.location.protocol + "//" + window.location.hostname + ":" + "3000";
+        }
+        console.log("baseUrl:", baseUrl);
+
+      </script>
+</body>
+</html>
